@@ -25,4 +25,5 @@ class AlarmAdmin(admin.ModelAdmin):
             for obj in instances:
                 obj.event.post_to_twitter(obj.get_message())
 
-admin.site.register(Alarm, AlarmAdmin)
+#admin.site.register(Alarm, AlarmAdmin)
+admin.site.register(Alarm)

@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
+from radiator.models import Alarm
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -13,3 +14,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         model = Group
         fields = ('url', 'name')
 
+class AlarmSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Alarm
+        fields = ('slug', 'message','description','status','order','date_created','date_updated')

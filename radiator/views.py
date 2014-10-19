@@ -3,7 +3,8 @@ from django.shortcuts import render
 # Create your views here.
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
-from radiator.serializers import UserSerializer, GroupSerializer
+from radiator.serializers import UserSerializer, GroupSerializer, AlarmSerializer
+from radiator.models import Alarm
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -20,4 +21,11 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+
+class AlarmViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Alarm.objects.all()
+    serializer_class = AlarmSerializer
 
