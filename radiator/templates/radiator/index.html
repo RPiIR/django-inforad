@@ -1,0 +1,60 @@
+{% extends "radiator/base.html" %}
+
+
+{% block content %}
+    {% if latest_alarm %}
+        <div class="latest-alarm alarm status-{{ latest_alarm.status }}">
+            <h3>Latest Alarm</h3>
+            <p><a href="{% url radiator:alarm latest_alarm.pk %}">{{ latest_alarm.get_message }}</a></p>
+            <time>{{ latest_alarm.date_updated|timesince }}{% if not latest_alarm.status %} (lasted {{ latest_alarm.get_duration|duration }}){% endif %}</time>
+            <span class="affects">affects {% for slug, name in latest_alarm.get_services %}<a href="{% url radiator:service slug %}">{{ name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</span>
+        </div>
+    {% endif %}
+
+    <div class="service-list">
+        <table>
+            <thead>
+                <tr>
+                    <th class="status">Status</th>
+                    <th class="service">Service</th>
+                    <th class="last-alarm">Last Alarm</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for service in service_list %}
+                    <tr>
+                        <td class="status status-{{ service.status }}">{{ service.get_status_display }}</td>
+                        <td class="service">
+                            <h2><a href="{% url radiator:service service.slug %}">{{ service.name }}</a></h2>
+                            {% if service.description %}
+                                <p>{{ service.description }}</p>
+                            {% endif %}
+                        </td>
+                        <td class="last-alarm">
+                            {% if service.date_updated != service.date_created %}
+                                <a href="{% url radiator:last_alarm service.slug %}">{{ service.date_updated|timesince }}</a>
+                            {% else %}
+                                <em>n/a</em>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% if alarm_list %}
+        <div class="alarm-list">
+            <h3>Recent Alarms</h3>
+            <ul>
+                {% for alarm in alarm_list %}
+                    <li class="alarm status-{{ alarm.status }}">
+                        <p><a href="{% url radiator:alarm alarm.pk %}">{{ alarm.get_message }}</a></p>
+                        <time>{{ alarm.date_updated|timesince }}{% if not alarm.status %} (lasted {{ alarm.get_duration|duration }}){% endif %}</time>
+                        <span class="affects">affects {% for slug, name in alarm.get_services %}<a href="{% url radiator:service slug %}">{{ name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+{% endblock %}

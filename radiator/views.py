@@ -1,11 +1,54 @@
-from django.shortcuts import render
+from django.shortcuts import render,render_to_response
+import datetime
 
 # Create your views here.
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from radiator.serializers import UserSerializer, GroupSerializer, AlarmSerializer
 from radiator.models import Alarm
+from django.db.models.query import Q
+from django.http import HttpResponse
+from django.template import RequestContext, loader
 
+import datetime
+import urlparse
+
+from django.core.context_processors import csrf
+from django.core.mail import send_mail
+from django.core.urlresolvers import reverse
+from django.db.models.query import Q
+from django.http import HttpResponseRedirect
+from django.views.decorators.csrf import csrf_protect
+
+def requires(value_or_callable):
+    def wrapped(func):
+        def call(request, *args, **kwargs):
+            if callable(value_or_callable):
+                result = value_or_callable(request)
+            else:
+                result = value_or_callable
+            
+            if not result:
+                return HttpResponseRedirect(reverse('overseer:index'))
+            
+            return func(request, *args, **kwargs)
+        return call
+    return wrapped
+
+def respond(template, context={}, request=None, **kwargs):
+    "Calls render_to_response with a RequestConext"
+    from django.http import HttpResponse
+    from django.template import RequestContext
+    from django.template.loader import render_to_string    
+
+    if request:
+        default = context_processors.default(request)
+        default.update(context)
+    else:
+        default = context.copy()
+    
+    rendered = render_to_string(template, default, context_instance=request and RequestContext(request) or None)
+    return HttpResponse(rendered, **kwargs)
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -28,4 +71,27 @@ class AlarmViewSet(viewsets.ModelViewSet):
     """
     queryset = Alarm.objects.all()
     serializer_class = AlarmSerializer
+
+def index(request):
+    "Displays a list of all services and their current status."
+    
+    # Obtain the context from the HTTP request.
+    context = RequestContext(request)
+    #service_list = Service.objects.all()
+    
+    alarm_list = list(Alarm.objects\
+                             .filter(Q(status__gt=0) | Q(date_updated__gte=datetime.datetime.now()-datetime.timedelta(days=1)))\
+                             .order_by('-date_created')[0:6])
+    
+    #if event_list:
+    #    latest_event, event_list = event_list[0], event_list[1:]
+    #else:
+    #    latest_event = None
+    
+    return render_to_response('radiator/index.html', {
+        #'service_list': service_list,
+        'alarm_list': alarm_list,
+        #'latest_event': latest_event,
+    }, context)
+
 
