@@ -3,3 +3,5 @@ djangorestframework
 markdown
 django-filter
 django-extensions
+django-bootstrap3
+

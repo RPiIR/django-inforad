@@ -1,0 +1,15 @@
+{% load sitetree %}
+	{% for item in sitetree_items %}
+		{% if item.has_children %}
+	<li class="dropdown-header">
+        {{ item.title_resolved }}
+        </li>
+			{% sitetree_children of item for menu template "base/dropdown-menu.html" %}
+                        <li class="divider"></li>
+        {% else %}
+
+	<li>
+        <a href="{% sitetree_url for item %}" {% if item.hint %}title="{{ item.hint }}"{% endif %} {% if item.is_current or item.in_current_branch %}class="{{ item.is_current|yesno:"current_item ," }}{{ item.in_current_branch|yesno:"current_branch," }}"{% endif %}>{{ item.title_resolved }}</a>
+	</li>
+		{% endif %}
+	{% endfor %}

@@ -20,6 +20,9 @@ from django.db.models.query import Q
 from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_protect
 
+
+from bootstrap3.tests import TestForm
+
 def requires(value_or_callable):
     def wrapped(func):
         def call(request, *args, **kwargs):
@@ -88,8 +91,8 @@ def index(request):
     #else:
     #    latest_alarm = None
     
-    return render_to_response('radiator/index.html', {
-        #'service_list': service_list,
+    return render_to_response('radiator/home.html', {
+        'form': TestForm(),
         'alarm_list': alarm_list,
         #'latest_alarm': latest_alarm,
     }, context)
