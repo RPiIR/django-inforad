@@ -3,7 +3,7 @@ import puka
 class Device:
     """ Object for control remote device """
     def __init__(self):
-        self.producer = puka.Client("amqp://10.0.0.20/")
+        self.producer = puka.Client("amqp://127.0.0.1/")
         send_promise = self.producer.connect()
         self.producer.wait(send_promise)
 

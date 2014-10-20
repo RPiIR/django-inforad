@@ -1,6 +1,6 @@
 
 run:
-	python ./manage.py runserver 10.0.0.20:8123
+	python ./manage.py runserver 0.0.0.0:8123
 
 db:
 	python ./manage.py syncdb
