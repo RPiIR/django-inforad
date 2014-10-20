@@ -78,11 +78,20 @@ USE_L10N = True
 
 USE_TZ = True
 
+OVERSEER_TITLE = 'Title'
+#'OVERSEER_NAME': conf.NAME,
+OVERSEER_MEDIA_PREFIX = '/static'
+#        'OVERSEER_VERSION': overseer.VERSION,
+#        'OVERSEER_ALLOW_SUBSCRIPTIONS': conf.ALLOW_SUBSCRIPTIONS,
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 STATIC_ROOT = 'static'
 STATIC_URL = '/static/'
+
+#STATICFILES_DIRS = ( 
+#            'static',
+#            )
 
 REST_FRAMEWORK = {
         'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),

@@ -1,4 +1,5 @@
 <!doctype html>
+{% load static from staticfiles %}
 
 <!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
 <!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
@@ -16,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="shortcut icon" href="{{ OVERSEER_MEDIA_PREFIX }}/favicon.png">
   <link rel="apple-touch-icon" href="{{ OVERSEER_MEDIA_PREFIX }}/apple-touch-icon.png">
-  <link rel="stylesheet" href="{{ OVERSEER_MEDIA_PREFIX }}/css/base.css">
+  <link rel="stylesheet" href="{% static "css/base.css" %}">
 </head>
 
 <body>
