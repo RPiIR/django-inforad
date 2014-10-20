@@ -2,7 +2,7 @@ from django import forms
 from django.contrib import admin
 
 # Register your models here.
-from radiator.models import Alarm
+from radiator.models import Alarm, AlertType
 
 class AlarmForm(forms.ModelForm):
     pass
@@ -11,6 +11,9 @@ class AlarmForm(forms.ModelForm):
 
     #class Meta:
     #    model = AlarmUpdate
+
+class AlertTypeAdmin(admin.ModelAdmin):
+    list_display = ["label", "display", "description", "default"]
 
 class AlarmAdmin(admin.ModelAdmin):
     #form = AlarmForm
@@ -26,4 +29,5 @@ class AlarmAdmin(admin.ModelAdmin):
                 obj.event.post_to_twitter(obj.get_message())
 
 #admin.site.register(Alarm, AlarmAdmin)
+admin.site.register(AlertType, AlertTypeAdmin)
 admin.site.register(Alarm)

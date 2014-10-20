@@ -3,6 +3,10 @@
 {% block title %}Info{% endblock %}
     {% block content %}
 <div class="container" style="margin-top: 10px">
+	<!-- Indicates a successful or positive action -->
+	<button type="button" class="btn btn-success" onclick="location.href='/light/off'">Success</button>
+	<!-- Indicates a dangerous or potentially negative action -->
+	<button type="button" class="btn btn-danger" onclick="location.href='/light/on'">Danger</button>
 
                 {% for alarm in alarm_list %}
 				<div class="panel panel-warning alarm status-{{ alarm.status }}">

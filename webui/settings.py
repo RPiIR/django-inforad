@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'radiator',
     'django_extensions',
     'bootstrap3',
+    #'celery_admin',
 )
 
 MIDDLEWARE_CLASSES = (

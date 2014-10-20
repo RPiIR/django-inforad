@@ -1,4 +1,4 @@
-from django.shortcuts import render,render_to_response
+from django.shortcuts import render,render_to_response, redirect
 import datetime
 
 # Create your views here.
@@ -113,3 +113,14 @@ def alarm(request, id):
         'alarm': evt,
         'update_list': update_list,
     }, context)
+
+import device
+
+def light_action(request,val):
+    d = device.Device()
+    if val == 'on':
+        d.light_on()
+    elif val == 'off':
+        d.light_off()
+    return redirect('index')
+
