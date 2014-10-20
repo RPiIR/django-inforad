@@ -1,0 +1,23 @@
+{% extends "_layouts/base.html" %}
+
+{% block title %}Info{% endblock %}
+    {% block content %}
+<div class="container" style="margin-top: 10px">
+
+                {% for alarm in alarm_list %}
+				<div class="panel panel-warning alarm status-{{ alarm.status }}">
+		  <div class="panel-heading">
+                <h3 class="panel-title">
+			  Panel heading without title
+				</h3>
+		  </div>
+		    <div class="panel-body">
+
+                        <p><a href="ulr alarm">{{ alarm.get_message }}</a></p>
+                        <time>{{ alarm.date_updated|timesince }}{% if not alarm.status %} (lasted {{ alarm.get_duration }}){% endif %}</time>
+                        <span class="affects">affects {% for slug, name in alarm.get_services %}<a href="">{{ name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}</span>
+					</div>
+				  </div>
+                {% endfor %}
+        </div>
+	{% endblock %}
