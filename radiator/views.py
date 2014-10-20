@@ -83,15 +83,30 @@ def index(request):
                              .filter(Q(status__gt=0) | Q(date_updated__gte=datetime.datetime.now()-datetime.timedelta(days=1)))\
                              .order_by('-date_created')[0:6])
     
-    #if event_list:
-    #    latest_event, event_list = event_list[0], event_list[1:]
+    #if alarm_list:
+    #    latest_alarm, alarm_list = alarm_list[0], alarm_list[1:]
     #else:
-    #    latest_event = None
+    #    latest_alarm = None
     
     return render_to_response('radiator/index.html', {
         #'service_list': service_list,
         'alarm_list': alarm_list,
-        #'latest_event': latest_event,
+        #'latest_alarm': latest_alarm,
     }, context)
 
-
+def alarm(request, id):
+    "Displays a list of all services and their current status."
+    # Obtain the context from the HTTP request.
+    context = RequestContext(request)
+    
+    try:
+        evt = Alarm.objects.get(pk=id)
+    except Alarm.DoesNotExist:
+        return HttpResponseRedirect(reverse('overseer:index'))
+    
+    update_list = list(evt.eventupdate_set.order_by('-date_created'))
+    
+    return render_to_response('radiator/alarm.html', {
+        'alarm': evt,
+        'update_list': update_list,
+    }, context)

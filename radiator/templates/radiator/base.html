@@ -24,7 +24,7 @@
   <div id="container">
     <header>
         <div class="wrapper">
-            <h1><a href="{% url radiator:index %}">{{ OVERSEER_NAME }}</a></h1>
+            <h1><a href="">{{ OVERSEER_NAME }}</a></h1>
         </div>
     </header>
     
@@ -33,7 +33,7 @@
             <div class="clearfix">
                 {% block content %}{% endblock %}
                 {% if OVERSEER_ALLOW_SUBSCRIPTIONS %}
-                    <p>Want to get notified when things change? <a href="{% url radiator:create_subscription %}">Subscribe to status updates</a>.</p>
+                    <p>Want to get notified when things change? <a href="">Subscribe to status updates</a>.</p>
                 {% endif %}
             </div>
         </div>
@@ -41,7 +41,7 @@
     
     <footer>
         <div class="wrapper">
-            Powered by <a href="https://github.com/disqus/radiator">Overseer {{ OVERSEER_VERSION }}</a> | Conjured up by the <a href="http://code.disqus.com">DISQUS</a> team and other noble <a href="https://github.com/disqus/radiator/contributors">sorcerers</a>. | <a href="{% url admin:index %}">Admin</a>
+            Powered by <a href="https://github.com/disqus/radiator">Overseer {{ OVERSEER_VERSION }}</a> | Conjured up by the <a href="http://code.disqus.com">DISQUS</a> team and other noble <a href="https://github.com/disqus/radiator/contributors">sorcerers</a>. | <a href="/admin">Admin</a>
         </div>
     </footer>
   </div> <!-- end of #container -->  
